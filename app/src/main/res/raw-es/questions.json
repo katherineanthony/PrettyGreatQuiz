@@ -1,0 +1,43 @@
+[
+  {
+    "question" : "Los pimientos rojos son mejores crudos que a la parrilla.",
+    "answer" : true
+  },
+  {
+    "question" : "Si se extrae el intestino, tendrá más de veinte pies de largo.",
+    "answer" : false
+  },
+  {
+    "question" : "La guillotina era ilegal en 1912.",
+    "answer" : false
+  },
+  {
+    "question" : "El sol es el 99.8% de nuestra sistema solar.",
+    "answer" : true
+  },
+  {
+    "question" : "Los edificios de ladrillo que tienen más de diez pisos colapsarán por el peso.",
+    "answer" : false
+  },
+  {
+    "question" : "Oxford University en Inglaterra se hacía antes que imperio Aztec.",
+    "answer" : true
+  },
+  {
+    "question" : "Galletas oreos nacía más temprano que galletas con chispas de chocolate.",
+    "answer" : true
+  },
+  {
+    "question" : "Hay diez veces más bacterias en su cuerpo que las células.",
+    "answer" : true
+  },
+  {
+    "question" : "Cougar es más guapo que Liam.",
+    "answer" : false
+  },
+  {
+    "question" : "Cougar no es tan guapo como Andrew",
+    "answer" : true
+  }
+
+]

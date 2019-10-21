@@ -1,0 +1,43 @@
+[
+  {
+    "question" : "Red bell peppers raw are better than grilled",
+    "answer" : true
+  },
+  {
+    "question" : "If your large intestine was removed and straightened it'd be 20 feet long",
+    "answer" : false
+  },
+  {
+    "question" : "The guillotine was outlawed in 1915",
+    "answer" : false
+  },
+  {
+    "question" : "The sun makes up 99.8 % of our solar system",
+    "answer" : true
+  },
+  {
+    "question" : "Brick buildings higher than 10 floors will collapse because of the weight",
+    "answer" : false
+  },
+  {
+    "question" : "Oxford University in England predates the Aztec Empire",
+    "answer" : true
+  },
+  {
+    "question" : "Oreo cookies was invented before chocolate chip cookies",
+    "answer" : true
+  },
+  {
+    "question" : "There is 10 times more bacteria in your body than your body cells",
+    "answer" : true
+  },
+  {
+    "question" : "Cougar is cooler than Liam",
+    "answer" : false
+  },
+  {
+    "question" : "Cougar is not as cool as Andrew",
+    "answer" : true
+  }
+
+]

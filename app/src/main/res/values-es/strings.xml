@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mucho Bueno Prueba</string>
+    <string name="false_button">Falso</string>
+    <string name="question_textView">Pregunta</string>
+    <string name="true_button">Cierto</string>
+</resources>
