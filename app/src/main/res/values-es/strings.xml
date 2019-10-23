@@ -4,4 +4,6 @@
     <string name="false_button">Falso</string>
     <string name="question_textView">Pregunta</string>
     <string name="true_button">Cierto</string>
+    <string name="questionNumber_textView">0 de 10</string>
+    <string name="play_textView">Juega</string>
 </resources>

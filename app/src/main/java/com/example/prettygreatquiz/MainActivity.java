@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonTrue;
     private Button buttonFalse;
     private TextView textViewQuestion;
+    private TextView textViewQuestionNumber;
+    private String jsonString;
 
     public static final String EXTRA_QUESTION = "question";
     public static final String EXTRA_ANSWER = "answer";
@@ -34,11 +37,32 @@ public class MainActivity extends AppCompatActivity {
         wireWidgets();
         setListeners();
 
-        String sxml = readTextFile(XmlFileInputStream);
+        //read json file into a string-pull json data file
+        //use gson on string to convert to a list of objects
+        //create a quiz object from list of questions
+        //load first question
+
+        //need to make quiz class
+
+        //two listeners: false/true
+
+
+        //use on click listeners to wait for user interactions
+
+
+
+        textViewQuestionNumber.setVisibility(View.INVISIBLE);
+        textViewQuestion.setVisibility(View.INVISIBLE);
+        buttonFalse.setVisibility(View.INVISIBLE);
+        buttonTrue.setVisibility(View.INVISIBLE);
+
+
+        InputStream xmlFileInputStream = getResources().openRawResource(R.raw.questions);
+        jsonString = readTextFile(xmlFileInputStream);
         // create a gson object
         Gson gson = new Gson();
         // read your json file into an array of questions
-        Question[] questions =  gson.fromJson();
+        Question[] questions =  gson.fromJson(jsonString, Question[].class);
         // convert your array to a list using the Arrays utility class
         List<Question> questionList = Arrays.asList(questions);
         // verify that it read everything properly
@@ -46,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
+        buttonTrue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
@@ -54,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         buttonFalse=findViewById(R.id.button_main_false);
         buttonTrue=findViewById(R.id.button_main_true);
         textViewQuestion=findViewById(R.id.textView_main_question);
+        textViewQuestionNumber=findViewById(R.id.textView_main_questionNumber);
     }
 
     public String readTextFile(InputStream inputStream){

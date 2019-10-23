@@ -5,13 +5,16 @@ public class Question {
     private boolean answer;
     private String question;
 
+
+
     public Question(){
 
     }
 
 
-    public Question nextQuestion()
+    public String nextQuestion()
     {
+        return question;
 
     }
 

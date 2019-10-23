@@ -3,4 +3,6 @@
     <string name="false_button">False</string>
     <string name="true_button">True</string>
     <string name="question_textView">False</string>
+    <string name="questionNumber_textView">0 of 10</string>
+    <string name="play_textView">Play</string>
 </resources>
