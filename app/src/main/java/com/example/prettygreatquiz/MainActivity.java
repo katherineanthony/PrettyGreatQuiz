@@ -2,6 +2,7 @@ package com.example.prettygreatquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,9 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewQuestion;
     private TextView textViewQuestionNumber;
     private String jsonString;
+    private Button buttonPlay;
 
     public static final String EXTRA_QUESTION = "question";
-    public static final String EXTRA_ANSWER = "answer";
+    public static final String EXTRA_PERSONANSWER = "answer";
+
+    //make it the string of questions and then convert to gson in Quiz class
+    public static final String EXTRA_QUESTIONS = ;
     public static final String TAG = "MainActivity";
 
 
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         textViewQuestion.setVisibility(View.INVISIBLE);
         buttonFalse.setVisibility(View.INVISIBLE);
         buttonTrue.setVisibility(View.INVISIBLE);
+        buttonPlay.setVisibility(View.VISIBLE);
 
 
         InputStream xmlFileInputStream = getResources().openRawResource(R.raw.questions);
@@ -67,15 +73,45 @@ public class MainActivity extends AppCompatActivity {
         List<Question> questionList = Arrays.asList(questions);
         // verify that it read everything properly
         Log.d(TAG, "onCreate: " + questionList.toString());
+
+        Intent questionsIntent = new Intent(MainActivity.this, Quiz.class);
+        //^ is intent for the string of questions
+        // we need to add the current string of questions before gsoning it
+
     }
 
     private void setListeners() {
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textViewQuestionNumber.setVisibility(View.VISIBLE);
+                textViewQuestion.setVisibility(View.VISIBLE);
+                buttonFalse.setVisibility(View.VISIBLE);
+                buttonTrue.setVisibility(View.VISIBLE);
+                buttonPlay.setVisibility(View.INVISIBLE);
+            }
+        });
+
         buttonTrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent playerAnswerIntent = new Intent(MainActivity.this, Quiz.class);
+
+                playerAnswerIntent.putExtra(EXTRA_PERSONANSWER, "true");
+            }
+        });
+        buttonFalse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent playerAnswerIntent = new Intent(MainActivity.this, Quiz.class);
+
+
+                playerAnswerIntent.putExtra(EXTRA_PERSONANSWER, "false");
 
             }
         });
+
+
 
     }
 
@@ -85,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         buttonTrue=findViewById(R.id.button_main_true);
         textViewQuestion=findViewById(R.id.textView_main_question);
         textViewQuestionNumber=findViewById(R.id.textView_main_questionNumber);
+        buttonPlay=findViewById(R.id.button_main_play);
     }
 
     public String readTextFile(InputStream inputStream){
