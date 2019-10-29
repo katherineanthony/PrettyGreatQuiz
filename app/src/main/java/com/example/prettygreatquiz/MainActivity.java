@@ -21,16 +21,19 @@ public class MainActivity extends AppCompatActivity {
 
     private Button buttonTrue;
     private Button buttonFalse;
+    //private Button buttonNextQuestion;
     private TextView textViewQuestion;
     private TextView textViewQuestionNumber;
     private String jsonString;
     private Button buttonPlay;
+    private Quiz quiz;
 
     public static final String EXTRA_QUESTION = "question";
     public static final String EXTRA_PERSONANSWER = "answer";
 
     //make it the string of questions and then convert to gson in Quiz class
-    public static final String EXTRA_QUESTIONS = ;
+    public static final String EXTRA_QUESTIONS = "questions";
+    public static final String EXTRA_GAME_START = "false";
     public static final String TAG = "MainActivity";
 
 
@@ -39,9 +42,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //use on click listeners to wait for user interactions
+        InputStream xmlFileInputStream = getResources().openRawResource(R.raw.questions);
+        jsonString = readTextFile(xmlFileInputStream);
+
+        // create a gson object
+        Gson gson = new Gson();
+        // read your json file into an array of questions
+        Question[] questions =  gson.fromJson(jsonString, Question[].class);
+        // convert your array to a list using the Arrays utility class
+        List<Question> questionList = Arrays.asList(questions);
+
+        // verify that it read everything properly
+        Log.d("Quiz", "onCreate: " + questionList.toString());
+
+        quiz = new Quiz(questionList);
         wireWidgets();
         setListeners();
-
         //read json file into a string-pull json data file
         //use gson on string to convert to a list of objects
         //create a quiz object from list of questions
@@ -52,31 +69,13 @@ public class MainActivity extends AppCompatActivity {
         //two listeners: false/true
 
 
-        //use on click listeners to wait for user interactions
-
-
-
         textViewQuestionNumber.setVisibility(View.INVISIBLE);
         textViewQuestion.setVisibility(View.INVISIBLE);
         buttonFalse.setVisibility(View.INVISIBLE);
         buttonTrue.setVisibility(View.INVISIBLE);
+        //buttonNextQuestion.setVisibility(View.INVISIBLE);
         buttonPlay.setVisibility(View.VISIBLE);
 
-
-        InputStream xmlFileInputStream = getResources().openRawResource(R.raw.questions);
-        jsonString = readTextFile(xmlFileInputStream);
-        // create a gson object
-        Gson gson = new Gson();
-        // read your json file into an array of questions
-        Question[] questions =  gson.fromJson(jsonString, Question[].class);
-        // convert your array to a list using the Arrays utility class
-        List<Question> questionList = Arrays.asList(questions);
-        // verify that it read everything properly
-        Log.d(TAG, "onCreate: " + questionList.toString());
-
-        Intent questionsIntent = new Intent(MainActivity.this, Quiz.class);
-        //^ is intent for the string of questions
-        // we need to add the current string of questions before gsoning it
 
     }
 
@@ -88,30 +87,41 @@ public class MainActivity extends AppCompatActivity {
                 textViewQuestion.setVisibility(View.VISIBLE);
                 buttonFalse.setVisibility(View.VISIBLE);
                 buttonTrue.setVisibility(View.VISIBLE);
+                //buttonNextQuestion.setVisibility(View.VISIBLE);
                 buttonPlay.setVisibility(View.INVISIBLE);
+
+                textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()));
+                textViewQuestion.setText(String.valueOf(quiz.getQuestion()));
             }
         });
 
         buttonTrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent playerAnswerIntent = new Intent(MainActivity.this, Quiz.class);
 
-                playerAnswerIntent.putExtra(EXTRA_PERSONANSWER, "true");
+                quiz.checkAnswer(true);
+
+                quiz.getQuestion();
+
+                textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()));
+                textViewQuestion.setText(String.valueOf(quiz.getQuestion()));
             }
         });
         buttonFalse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent playerAnswerIntent = new Intent(MainActivity.this, Quiz.class);
+
+                quiz.checkAnswer(false);
+
+                quiz.getQuestion();
+
+                textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()));
+                textViewQuestion.setText(String.valueOf(quiz.getQuestion()));
 
 
-                playerAnswerIntent.putExtra(EXTRA_PERSONANSWER, "false");
 
             }
         });
-
-
 
     }
 
@@ -122,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         textViewQuestion=findViewById(R.id.textView_main_question);
         textViewQuestionNumber=findViewById(R.id.textView_main_questionNumber);
         buttonPlay=findViewById(R.id.button_main_play);
+        //buttonNextQuestion=findViewById(R.id.button_main_nextQuestion);
     }
 
     public String readTextFile(InputStream inputStream){

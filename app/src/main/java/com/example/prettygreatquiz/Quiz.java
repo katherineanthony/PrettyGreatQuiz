@@ -2,19 +2,26 @@ package com.example.prettygreatquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 public class Quiz extends AppCompatActivity {
 
-    private String question;
+    private Question question;
     private List<Question> questions;
     private boolean answer;
     private int questionNumber;
     private int score;
+
 
     public Quiz(List<Question> questions)
     {
@@ -22,23 +29,6 @@ public class Quiz extends AppCompatActivity {
         questionNumber = 0;
         this.questions = questions;
 
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        wireWidgets();
-
-
-
-
-
-        Intent answerIntent = getIntent();
-        String personAnswer = answerIntent.getStringExtra(MainActivity.EXTRA_PERSONANSWER);
-        if(){
-
-        }
     }
 
     private void wireWidgets() {
@@ -49,12 +39,18 @@ public class Quiz extends AppCompatActivity {
     public Quiz()
     {
 
-
     }
 
-    public boolean checkAnswer()
+    public boolean checkAnswer(boolean personAnswer)
     {
-        return true;
+        if(personAnswer == questions.get(questionNumber).isAnswer())
+        {
+            questionNumber++;
+            score++;
+            return true;
+        }
+        score--;
+        return false;
     }
 
     public int getQuestionNumber() {
@@ -65,19 +61,23 @@ public class Quiz extends AppCompatActivity {
         this.questionNumber = questionNumber;
     }
 
-    public boolean isAnswer() {
-        return answer;
-    }
-
     public void setAnswer(boolean answer) {
         this.answer = answer;
     }
 
     public String getQuestion() {
-        return question;
+        question = questions.get(questionNumber - 1);
+        return question.toString();
+    }
+    public boolean areThereMoreQuestions()
+    {
+        if(questions.get(questionNumber) == 10)
+        {
+
+        }
     }
 
-    public void setQuestion(String question) {
+    public void setQuestion(Question question) {
         this.question = question;
     }
 }
