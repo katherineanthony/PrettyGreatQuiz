@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     //make it the string of questions and then convert to gson in Quiz class
     public static final String EXTRA_QUESTIONS = "questions";
     public static final String EXTRA_GAME_START = "false";
+    public static final String EXTRA_SCORE = "score";
     public static final String TAG = "MainActivity";
 
 
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 //buttonNextQuestion.setVisibility(View.VISIBLE);
                 buttonPlay.setVisibility(View.INVISIBLE);
 
-                textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()));
-                textViewQuestion.setText(String.valueOf(quiz.getQuestion()));
+                textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()+1));
+                textViewQuestion.setText((quiz.getQuestion()));
             }
         });
 
@@ -100,11 +101,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 quiz.checkAnswer(true);
+                if(quiz.areThereMoreQuestions())
+                {
 
-                quiz.getQuestion();
+                    textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()+1));
 
-                textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()));
-                textViewQuestion.setText(String.valueOf(quiz.getQuestion()));
+                    textViewQuestion.setText((quiz.getQuestion()));
+                    quiz.nextQuestion();
+                }
+
+                else {
+                    Intent endScreen = new Intent(MainActivity.this, EndActivity.class);
+                    endScreen.putExtra(EXTRA_SCORE, quiz.getScore());
+                    quiz.setScore(0);
+                    quiz.setQuestionNumber(0);
+                    textViewQuestion.setText(quiz.getQuestion());
+                    textViewQuestionNumber.setText(String.valueOf(1));
+
+
+                    startActivity(endScreen);
+                }
             }
         });
         buttonFalse.setOnClickListener(new View.OnClickListener() {
@@ -112,11 +128,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 quiz.checkAnswer(false);
+                if(quiz.areThereMoreQuestions())
+                {
+                    textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()+1));
 
-                quiz.getQuestion();
+                    textViewQuestion.setText((quiz.getQuestion()));
+                    quiz.nextQuestion();
+                }
 
-                textViewQuestionNumber.setText(String.valueOf(quiz.getQuestionNumber()));
-                textViewQuestion.setText(String.valueOf(quiz.getQuestion()));
+                else {
+                    Intent endScreen = new Intent(MainActivity.this, EndActivity.class);
+
+                    endScreen.putExtra(EXTRA_SCORE, quiz.getScore());
+                    quiz.setScore(0);
+                    quiz.setQuestionNumber(0);
+                    textViewQuestion.setText(quiz.getQuestion());
+                    textViewQuestionNumber.setText(String.valueOf(1));
+                    startActivity(endScreen);
+                }
 
 
 

@@ -6,5 +6,6 @@
     <string name="true_button">Cierto</string>
     <string name="questionNumber_textView">0</string>
     <string name="play_textView">Juega</string>
-    <string name="nextQuestion_textView">Luego pregunta</string>
+    <string name="playAgain_button">¿Juega ya?</string>
+    <string name="score_textView">0</string>
 </resources>

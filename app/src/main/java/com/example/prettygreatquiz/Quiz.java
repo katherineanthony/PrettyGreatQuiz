@@ -1,17 +1,7 @@
 package com.example.prettygreatquiz;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 
 public class Quiz extends AppCompatActivity {
@@ -31,26 +21,22 @@ public class Quiz extends AppCompatActivity {
 
     }
 
-    private void wireWidgets() {
-
-
-    }
-
-    public Quiz()
-    {
-
-    }
 
     public boolean checkAnswer(boolean personAnswer)
     {
         if(personAnswer == questions.get(questionNumber).isAnswer())
         {
-            questionNumber++;
             score++;
             return true;
         }
+        else{
         score--;
+        }
         return false;
+    }
+
+    public void nextQuestion() {
+        questionNumber++;
     }
 
     public int getQuestionNumber() {
@@ -65,19 +51,28 @@ public class Quiz extends AppCompatActivity {
         this.answer = answer;
     }
 
+    public void setScore(int score){
+        this.score = score;
+    }
+
     public String getQuestion() {
-        question = questions.get(questionNumber - 1);
-        return question.toString();
+        question = questions.get(questionNumber);
+        return question.getQuestion();
+
     }
     public boolean areThereMoreQuestions()
     {
-        if(questions.get(questionNumber) == 10)
+        if(questionNumber + 1 <= questions.size() - 1)
         {
+            return true;
 
         }
+        return false;
     }
 
     public void setQuestion(Question question) {
         this.question = question;
     }
+
+    public int getScore(){ return score; }
 }
